@@ -110,6 +110,18 @@ files:
         implementation 'org.springframework.boot:spring-boot-starter-web'
     }
   learner_created: false
-feedback_link: https://hyperskill.org/projects/189/stages/945/implement#comment
-status: Unchecked
+- name: src/cinema/Seats.java
+  visible: true
+  learner_created: true
+- name: src/cinema/SeatingPlan.java
+  visible: true
+  learner_created: true
+- name: src/cinema/SeatingPlanController.java
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/13375#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Fri, 18 Nov 2022 21:09:15 UTC"
 record: -1
