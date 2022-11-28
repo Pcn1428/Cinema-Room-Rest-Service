@@ -223,6 +223,108 @@ files:
         };
     }
   learner_created: false
+- name: src/cinema/Seats.java
+  visible: true
+  text: |
+    package cinema;
+
+    public class Seats {
+        private int row;
+        private int column;
+
+        public Seats() {}
+
+        public Seats (int row, int column) {
+            this.row = row;
+            this.column = column;
+        }
+
+        public int getRow() {
+            return row;
+        }
+
+        public void setRow(int row) {
+            this.row = row;
+        }
+
+        public int getColumn() {
+            return column;
+        }
+
+        public void setColumn(int column) {
+            this.column = column;
+        }
+    }
+  learner_created: true
+- name: src/cinema/SeatingPlan.java
+  visible: true
+  text: |
+    package cinema;
+
+    import java.util.*;
+
+    public class SeatingPlan {
+        private int totalRows;
+        private int totalColumns;
+        private ArrayList<Seats> availableSeats = new ArrayList<>();
+
+        public SeatingPlan() {}
+
+        public SeatingPlan(int totalRows, int totalColumns) {
+            this.totalRows = totalRows;
+            this.totalColumns = totalColumns;
+            for (int i = 1; i < totalRows + 1; i++) {
+                for (int j = 1; j < totalColumns + 1; j++) {
+                    this.availableSeats.add(new Seats(i,j));
+                }
+            }
+        }
+
+        public SeatingPlan(int totalRows, int totalColumns, ArrayList<Seats> availableSeats) {
+            this.totalRows = totalRows;
+            this.totalColumns = totalColumns;
+            this.availableSeats = availableSeats;
+        }
+
+        public int getTotalRows() {
+            return totalRows;
+        }
+
+        public void setTotalRows(int totalRows) {
+            this.totalRows = totalRows;
+        }
+
+        public int getTotalColumns() {
+            return totalColumns;
+        }
+
+        public void setTotalColumns(int totalColumns) {
+            this.totalColumns = totalColumns;
+        }
+
+        public ArrayList<Seats> getAvailableSeats() {
+            return availableSeats;
+        }
+
+        public void setAvailableSeats(ArrayList<Seats> availableSeats) {
+            this.availableSeats = availableSeats;
+        }
+    }
+  learner_created: true
+- name: src/cinema/SeatingPlanController.java
+  visible: true
+  text: "package cinema;\n\nimport org.springframework.web.bind.annotation.GetMapping;\n\
+    import org.springframework.web.bind.annotation.RestController;\n\nimport java.util.ArrayList;\n\
+    \n@RestController\npublic class SeatingPlanController {\n    \n    private SeatingPlan\
+    \ seatingPlan = new SeatingPlan(9,9);\n\n    @GetMapping(\"/seats\")\n    public\
+    \ SeatingPlan getSeatingPlan() {\n        return seatingPlan;\n    }\n}\n"
+  learner_created: true
+- name: src/cinema/UserInfo.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13376#comment
-status: Unchecked
-record: -1
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Sat, 26 Nov 2022 14:39:00 UTC"
+record: 2

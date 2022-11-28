@@ -48,4 +48,11 @@ public class SeatingPlan {
     public void setAvailableSeats(ArrayList<Seats> availableSeats) {
         this.availableSeats = availableSeats;
     }
+
+    public Seats searchAvailableSeats(int row, int column) {
+        for (Seats s: this.getAvailableSeats()) {
+            if (s.getRow() == row && s.getColumn() == column) return s;
+        }
+        return null;
+    }
 }
