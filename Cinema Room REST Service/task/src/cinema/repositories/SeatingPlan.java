@@ -1,4 +1,6 @@
-package cinema;
+package cinema.repositories;
+
+import cinema.entities.Seats;
 
 import java.util.*;
 
@@ -49,9 +51,16 @@ public class SeatingPlan {
         this.availableSeats = availableSeats;
     }
 
-    public Seats searchAvailableSeats(int row, int column) {
+    public Seats searchAvailableSeatsByRowColumn(int row, int column) {
         for (Seats s: this.getAvailableSeats()) {
             if (s.getRow() == row && s.getColumn() == column) return s;
+        }
+        return null;
+    }
+
+    public Seats searchAvailableSeatsByToken(UUID token) {
+        for (Seats s: this.getAvailableSeats()) {
+            if (s.getToken() == token && !s.isAvailable()) return s;
         }
         return null;
     }

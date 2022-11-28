@@ -1,4 +1,4 @@
-package cinema;
+package cinema.entities;
 
 public class UserInfo {
     private int row;

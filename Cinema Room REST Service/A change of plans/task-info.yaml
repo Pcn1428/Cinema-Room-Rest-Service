@@ -297,7 +297,26 @@ files:
         };
     }
   learner_created: false
-- name: src/cinema/Seats.java
+- name: src/cinema/controllers/SeatingPlanController.java
+  visible: true
+  text: "package cinema;\n\nimport org.springframework.http.HttpStatus;\nimport org.springframework.http.ResponseEntity;\n\
+    import org.springframework.web.bind.annotation.*;\n\nimport java.util.ArrayList;\n\
+    import java.util.Map;\n\n@RestController\npublic class SeatingPlanController {\n\
+    \    \n    private SeatingPlan seatingPlan = new SeatingPlan(9,9);\n\n    @GetMapping(\"\
+    /seats\")\n    public SeatingPlan getSeatingPlan() {\n        return seatingPlan;\n\
+    \    }\n\n    @PostMapping(\"/purchase\")\n    public ResponseEntity<Map> purchaseSeat(@RequestBody\
+    \ UserInfo user) {\n        Seats s = seatingPlan.searchAvailableSeats(user.getRow(),\
+    \ user.getColumn());\n        if (s != null && s.isAvailable()) {\n          \
+    \  s.setAvailable(false);\n            return new ResponseEntity<Map>(Map.of(\"\
+    row\", s.getRow(), \"column\", s.getColumn(), \"price\", s.getPrice()),HttpStatus.OK);\n\
+    \        } else if (user.getRow() > 9 || user.getRow() < 1 || user.getColumn()\
+    \ > 9 || user.getColumn() < 1){\n            return new ResponseEntity<Map>(Map.of(\"\
+    error\", \"The number of a row or a column is out of bounds!\"), HttpStatus.BAD_REQUEST);\n\
+    \        } else {\n            return new ResponseEntity<Map>(Map.of(\"error\"\
+    , \"The ticket has been already purchased!\"), HttpStatus.BAD_REQUEST);\n    \
+    \    }\n    }\n\n\n}\n"
+  learner_created: true
+- name: src/cinema/entities/Seats.java
   visible: true
   text: |
     package cinema;
@@ -354,7 +373,7 @@ files:
         }
     }
   learner_created: true
-- name: src/cinema/SeatingPlan.java
+- name: src/cinema/repositories/SeatingPlan.java
   visible: true
   text: |
     package cinema;
@@ -416,26 +435,7 @@ files:
         }
     }
   learner_created: true
-- name: src/cinema/SeatingPlanController.java
-  visible: true
-  text: "package cinema;\n\nimport org.springframework.http.HttpStatus;\nimport org.springframework.http.ResponseEntity;\n\
-    import org.springframework.web.bind.annotation.*;\n\nimport java.util.ArrayList;\n\
-    import java.util.Map;\n\n@RestController\npublic class SeatingPlanController {\n\
-    \    \n    private SeatingPlan seatingPlan = new SeatingPlan(9,9);\n\n    @GetMapping(\"\
-    /seats\")\n    public SeatingPlan getSeatingPlan() {\n        return seatingPlan;\n\
-    \    }\n\n    @PostMapping(\"/purchase\")\n    public ResponseEntity<Map> purchaseSeat(@RequestBody\
-    \ UserInfo user) {\n        Seats s = seatingPlan.searchAvailableSeats(user.getRow(),\
-    \ user.getColumn());\n        if (s != null && s.isAvailable()) {\n          \
-    \  s.setAvailable(false);\n            return new ResponseEntity<Map>(Map.of(\"\
-    row\", s.getRow(), \"column\", s.getColumn(), \"price\", s.getPrice()),HttpStatus.OK);\n\
-    \        } else if (user.getRow() > 9 || user.getRow() < 1 || user.getColumn()\
-    \ > 9 || user.getColumn() < 1){\n            return new ResponseEntity<Map>(Map.of(\"\
-    error\", \"The number of a row or a column is out of bounds!\"), HttpStatus.BAD_REQUEST);\n\
-    \        } else {\n            return new ResponseEntity<Map>(Map.of(\"error\"\
-    , \"The ticket has been already purchased!\"), HttpStatus.BAD_REQUEST);\n    \
-    \    }\n    }\n\n\n}\n"
-  learner_created: true
-- name: src/cinema/UserInfo.java
+- name: src/cinema/entities/UserInfo.java
   visible: true
   text: |
     package cinema;
@@ -464,5 +464,19 @@ files:
     }
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13377#comment
-status: Unchecked
+status: Failed
+feedback:
+  message: |-
+    Wrong answer in test #6
+
+    The JSON object at key error should equal to &quot;Wrong token!&quot;, found &quot;Bad Request&quot;
+
+    Full JSON:
+    {
+      &quot;timestamp&quot;: &quot;2022-11-28T21:46:56.522+00:00&quot;,
+      &quot;status&quot;: 400,
+      &quot;error&quot;: &quot;Bad Request&quot;,
+      &quot;path&quot;: &quot;/return&quot;
+    }
+  time: "Mon, 28 Nov 2022 21:46:56 UTC"
 record: -1

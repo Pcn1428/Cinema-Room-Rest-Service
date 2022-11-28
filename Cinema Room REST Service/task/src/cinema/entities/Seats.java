@@ -1,11 +1,15 @@
-package cinema;
+package cinema.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.UUID;
 
 public class Seats {
     private int row;
     private int column;
     private int price;
+    @JsonIgnore
+    private UUID token;
     @JsonIgnore
     private boolean available;
 
@@ -17,6 +21,7 @@ public class Seats {
         if (row <= 4) this.price = 10;
         else this.price = 8;
         this.available = true;
+        this.token = UUID.randomUUID();
     }
 
     public int getRow() {
@@ -49,5 +54,13 @@ public class Seats {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    public UUID getToken() {
+        return token;
+    }
+
+    public void setToken(UUID token) {
+        this.token = token;
     }
 }
