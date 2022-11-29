@@ -256,7 +256,7 @@ files:
         }
     }
   learner_created: true
-- name: src/cinema/SeatingPlan.java
+- name: src/cinema/CinemaRepository.java
   visible: true
   text: |
     package cinema;

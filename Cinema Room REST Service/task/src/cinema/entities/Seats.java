@@ -1,27 +1,26 @@
 package cinema.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.micrometer.core.lang.NonNull;
 
 import java.util.UUID;
 
 public class Seats {
+    @NonNull
     private int row;
+    @NonNull
     private int column;
     private int price;
-    @JsonIgnore
-    private UUID token;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private boolean available;
 
     public Seats() {}
 
-    public Seats (int row, int column) {
+    public Seats(int row, int column, int price, boolean available) {
         this.row = row;
         this.column = column;
-        if (row <= 4) this.price = 10;
-        else this.price = 8;
-        this.available = true;
-        this.token = UUID.randomUUID();
+        this.price = price;
+        this.available = available;
     }
 
     public int getRow() {
@@ -54,13 +53,5 @@ public class Seats {
 
     public void setAvailable(boolean available) {
         this.available = available;
-    }
-
-    public UUID getToken() {
-        return token;
-    }
-
-    public void setToken(UUID token) {
-        this.token = token;
     }
 }

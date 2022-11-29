@@ -316,6 +316,34 @@ files:
     , \"The ticket has been already purchased!\"), HttpStatus.BAD_REQUEST);\n    \
     \    }\n    }\n\n\n}\n"
   learner_created: true
+- name: src/cinema/entities/UserInfo.java
+  visible: true
+  text: |
+    package cinema;
+
+    public class UserInfo {
+        private int row;
+        private int column;
+
+        UserInfo() {}
+
+        public int getRow() {
+            return row;
+        }
+
+        public void setRow(int row) {
+            this.row = row;
+        }
+
+        public int getColumn() {
+            return column;
+        }
+
+        public void setColumn(int column) {
+            this.column = column;
+        }
+    }
+  learner_created: true
 - name: src/cinema/entities/Seats.java
   visible: true
   text: |
@@ -373,7 +401,13 @@ files:
         }
     }
   learner_created: true
-- name: src/cinema/repositories/SeatingPlan.java
+- name: src/cinema/entities/Token.java
+  visible: true
+  learner_created: true
+- name: src/cinema/entities/Cinema.java
+  visible: true
+  learner_created: true
+- name: src/cinema/repositories/CinemaRepository.java
   visible: true
   text: |
     package cinema;
@@ -435,48 +469,27 @@ files:
         }
     }
   learner_created: true
-- name: src/cinema/entities/UserInfo.java
+- name: src/cinema/service/CinemaService.java
   visible: true
-  text: |
-    package cinema;
-
-    public class UserInfo {
-        private int row;
-        private int column;
-
-        UserInfo() {}
-
-        public int getRow() {
-            return row;
-        }
-
-        public void setRow(int row) {
-            this.row = row;
-        }
-
-        public int getColumn() {
-            return column;
-        }
-
-        public void setColumn(int column) {
-            this.column = column;
-        }
-    }
+  learner_created: true
+- name: src/cinema/exceptions/WrongTokenException.java
+  visible: true
+  learner_created: true
+- name: src/cinema/exceptions/TicketAlreadyPurchasedException.java
+  visible: true
+  learner_created: true
+- name: src/cinema/exceptions/CustomErrorResponse.java
+  visible: true
+  learner_created: true
+- name: src/cinema/exceptions/CustomGlobalExceptionHandler.java
+  visible: true
+  learner_created: true
+- name: src/cinema/exceptions/SeatOutOfBoundsException.java
+  visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13377#comment
-status: Failed
+status: Solved
 feedback:
-  message: |-
-    Wrong answer in test #6
-
-    The JSON object at key error should equal to &quot;Wrong token!&quot;, found &quot;Bad Request&quot;
-
-    Full JSON:
-    {
-      &quot;timestamp&quot;: &quot;2022-11-28T21:46:56.522+00:00&quot;,
-      &quot;status&quot;: 400,
-      &quot;error&quot;: &quot;Bad Request&quot;,
-      &quot;path&quot;: &quot;/return&quot;
-    }
-  time: "Mon, 28 Nov 2022 21:46:56 UTC"
+  message: Congratulations!
+  time: "Tue, 29 Nov 2022 01:07:11 UTC"
 record: -1

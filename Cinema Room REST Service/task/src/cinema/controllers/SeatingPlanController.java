@@ -1,49 +1,38 @@
 package cinema.controllers;
 
-import cinema.repositories.SeatingPlan;
+import cinema.entities.Cinema;
+import cinema.entities.Token;
 import cinema.entities.Seats;
-import cinema.entities.UserInfo;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import cinema.service.CinemaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 public class SeatingPlanController {
     
-    private SeatingPlan seatingPlan = new SeatingPlan(9,9);
+    private final CinemaService cinemaService;
+
+    @Autowired
+    public SeatingPlanController(CinemaService cinemaService) {
+        this.cinemaService = cinemaService;
+    }
 
     @GetMapping("/seats")
-    public SeatingPlan getSeatingPlan() {
-        return seatingPlan;
+    public Cinema getCinemaInfo() {
+        return cinemaService.getCinemaInfo();
     }
 
-    @PostMapping("/purchase")
-    public ResponseEntity<Map<?,?>> purchaseSeat(@RequestBody UserInfo user) {
-        Seats s = seatingPlan.searchAvailableSeatsByRowColumn(user.getRow(), user.getColumn());
-        if (s != null && s.isAvailable()) {
-            s.setAvailable(false);
-            return new ResponseEntity<Map<?,?>>(Map.of("token", s.getToken(), "ticket",
-                    Map.of("row", s.getRow(), "column", s.getColumn(), "price", s.getPrice())),HttpStatus.OK);
-        } else if (user.getRow() > 9 || user.getRow() < 1 || user.getColumn() > 9 || user.getColumn() < 1){
-            return new ResponseEntity<Map<?,?>>(Map.of("error", "The number of a row or a column is out of bounds!"), HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<Map<?,?>>(Map.of("error", "The ticket has been already purchased!"), HttpStatus.BAD_REQUEST);
-        }
+    @PostMapping(path = "/purchase", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String,Object> purchaseTicket(@RequestBody Seats targetSeat) {
+        return cinemaService.generateTicket(targetSeat);
     }
 
-    @PostMapping("/return")
-    public ResponseEntity<Map<?,?>> returnSeat(@RequestBody UUID token) {
-        Seats s = seatingPlan.searchAvailableSeatsByToken(token);
-        if (s != null && !s.isAvailable() && s.getToken() == token) {
-            s.setAvailable(true);
-            return new ResponseEntity<Map<?, ?>>(Map.of("returned_ticket",
-                    Map.of("row", s.getRow(), "column", s.getColumn(), "price", s.getPrice())), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<Map<?,?>>(Map.of("error", "Wrong token!"), HttpStatus.BAD_REQUEST);
-        }
+    @PostMapping(path = "/return", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, Seats> returnTicket(@RequestBody Token token) {
+        return cinemaService.returnTicket(token);
     }
 
 }
