@@ -52,4 +52,18 @@ public class CinemaRepository {
     public boolean existsTicket(String token) {
         return PURCHASED_TICKETS.containsKey(token);
     }
+
+    public int getIncome() {
+        return PURCHASED_TICKETS.values().stream()
+                .mapToInt(Seats::getPrice)
+                .sum();
+    }
+
+    public int getAvailableSeats() {
+        return SEATS.size() - PURCHASED_TICKETS.size();
+    }
+
+    public int getPurchasedTickets() {
+        return PURCHASED_TICKETS.size();
+    }
 }

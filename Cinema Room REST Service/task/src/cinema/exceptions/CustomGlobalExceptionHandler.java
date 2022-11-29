@@ -26,4 +26,10 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(
                 new CustomErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage()), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(WrongPasswordException.class)
+    public ResponseEntity<CustomErrorResponse> customHandleWrongPassword(Exception e) {
+        return new ResponseEntity<>(
+                new CustomErrorResponse(HttpStatus.UNAUTHORIZED.value(), e.getMessage()), HttpStatus.UNAUTHORIZED);
+    }
 }

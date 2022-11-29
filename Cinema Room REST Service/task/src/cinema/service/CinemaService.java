@@ -2,9 +2,11 @@ package cinema.service;
 
 import cinema.entities.Cinema;
 import cinema.entities.Seats;
+import cinema.entities.Statistics;
 import cinema.entities.Token;
 import cinema.exceptions.SeatOutOfBoundsException;
 import cinema.exceptions.TicketAlreadyPurchasedException;
+import cinema.exceptions.WrongPasswordException;
 import cinema.exceptions.WrongTokenException;
 import cinema.repositories.CinemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import java.util.Map;
 @Service
 public class CinemaService {
     private final CinemaRepository cinemaRepo;
+    private static final String PASSWORD = "super_secret";
 
     @Autowired
     public CinemaService(CinemaRepository cinemaRepo) {
@@ -59,5 +62,19 @@ public class CinemaService {
                 && s.getColumn() <= cinemaRepo.getTotalColumns()
                 && s.getRow() > 0
                 && s.getColumn() > 0;
+    }
+
+    public Statistics getStatistics(String password) {
+        if (!isPasswordValid(password)) throw new WrongPasswordException();
+
+        int income = cinemaRepo.getIncome();
+        int availableSeats = cinemaRepo.getAvailableSeats();
+        int purchasedTickets = cinemaRepo.getPurchasedTickets();
+
+        return new Statistics(income,availableSeats,purchasedTickets);
+    }
+
+    public boolean isPasswordValid(String password) {
+        return PASSWORD.equals(password);
     }
 }
